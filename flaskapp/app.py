@@ -79,8 +79,22 @@ def getDeckValue(deck):
 
 
 # Function to deal initial cards
+# def deal_initial_cards():
+#     global dealer_cards, user_cards
+#     dealer_cards = []
+#     user_cards = []
+    
+#     # Dealer's cards
+#     dealer_cards.append(deck_obj.give_random_card())
+#     dealer_cards.append(deck_obj.give_random_card())
+    
+#     # User's cards
+#     user_cards.append(deck_obj.give_random_card())
+#     user_cards.append(deck_obj.give_random_card())
+
 def deal_initial_cards():
     global dealer_cards, user_cards
+    deck_obj.reset_deck()  # Reset the deck
     dealer_cards = []
     user_cards = []
     
@@ -91,7 +105,6 @@ def deal_initial_cards():
     # User's cards
     user_cards.append(deck_obj.give_random_card())
     user_cards.append(deck_obj.give_random_card())
-
 # Function to add a card to user's hand
 # def hit():
 #     global user_cards
