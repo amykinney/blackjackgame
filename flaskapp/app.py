@@ -7,14 +7,27 @@ app.secret_key = 'supersecretkey'
 deck_obj = deck_of_cards.DeckOfCards()
 
 # Database setup
+# def init_db():
+#     conn = sqlite3.connect('blackjack.db')
+#     c = conn.cursor()
+#     c.execute('''
+#         CREATE TABLE IF NOT EXISTS users (
+#             id INTEGER PRIMARY KEY AUTOINCREMENT,
+#             username TEXT UNIQUE NOT NULL,
+#             balance INTEGER DEFAULT 1000
+#         )
+#     ''')
+#     conn.commit()
+#     conn.close()
+
 def init_db():
     conn = sqlite3.connect('blackjack.db')
     c = conn.cursor()
     c.execute('''
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS players (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
-            balance INTEGER DEFAULT 1000
+            total_balance INTEGER NOT NULL
         )
     ''')
     conn.commit()
