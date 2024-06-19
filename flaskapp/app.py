@@ -20,6 +20,7 @@ deck_obj = deck_of_cards.DeckOfCards()
 #     conn.commit()
 #     conn.close()
 
+
 def init_db():
     conn = sqlite3.connect('blackjack.db')
     c = conn.cursor()
@@ -32,7 +33,6 @@ def init_db():
     ''')
     conn.commit()
     conn.close()
-
 init_db()
 
 # Define global variables
@@ -40,24 +40,43 @@ dealer_cards = []
 user_cards = []
 
 # Function to get deck value
+# def getDeckValue(deck):
+#     aceFlag = False
+#     deckValue = 0
+#     deckValueWithAce11 = 0
+
+#     for card in deck:
+#         if card.rank == 1:
+#             aceFlag = True
+#             deckValue += 1
+#             deckValueWithAce11 += 11
+#         elif card.value > 10:
+#             deckValue += 10
+#             deckValueWithAce11 += 10
+#         else:
+#             deckValue += card.value
+#             deckValueWithAce11 += card.value
+
+#     return (deckValue, deckValueWithAce11, aceFlag)
+
 def getDeckValue(deck):
-    aceFlag = False
-    deckValue = 0
-    deckValueWithAce11 = 0
+    deck_value = 0
+    ace_flag = False
 
     for card in deck:
-        if card.rank == 1:
-            aceFlag = True
-            deckValue += 1
-            deckValueWithAce11 += 11
-        elif card.value > 10:
-            deckValue += 10
-            deckValueWithAce11 += 10
-        else:
-            deckValue += card.value
-            deckValueWithAce11 += card.value
+        if card.rank == 1:  # Ace
+            if deck_value + 11 <= 21:
+                deck_value += 11
+                ace_flag = True
+            else:
+                deck_value += 1
+        elif card.value > 10:  # Face cards
+            deck_value += 10
+        else:  # Number cards
+            deck_value += card.value
 
-    return (deckValue, deckValueWithAce11, aceFlag)
+    return (deck_value, ace_flag)
+
 
 # Function to deal initial cards
 def deal_initial_cards():
@@ -74,6 +93,11 @@ def deal_initial_cards():
     user_cards.append(deck_obj.give_random_card())
 
 # Function to add a card to user's hand
+# def hit():
+#     global user_cards
+#     user_cards.append(deck_obj.give_random_card())
+#     return getDeckValue(user_cards)
+
 def hit():
     global user_cards
     user_cards.append(deck_obj.give_random_card())
@@ -99,20 +123,51 @@ def hit():
 #         return "Dealer wins!"
 
 # Function to determine game result
+# def determine_winner(user_value, dealer_value):
+#     if user_value[0] > 21:
+#         return "You busted! Dealer wins."
+#     elif dealer_value[0] > 21:
+#         return "Dealer busted! You win!"
+#     elif user_value[1] == 21 and len(user_cards) == 2 and dealer_value[1] != 21:
+#         return "Blackjack! You win!"
+#     elif dealer_value[1] == 21 and len(dealer_cards) == 2 and user_value[1] != 21:
+#         return "Dealer has Blackjack! Dealer wins!"
+#     elif user_value[0] == 21 and len(user_cards) == 2 and dealer_value[0] == 21 and len(dealer_cards) == 2:
+#         return "You both hit a blackjack! It's a tie!"
+#     elif user_value[0] == dealer_value[0]:
+#         return "It's a tie!"
+#     elif user_value[0] > dealer_value[0]:
+#         return "You win!"
+#     else:
+#         return "Dealer wins."
+
 def determine_winner(user_value, dealer_value):
-    if user_value[0] > 21:
-        return "You busted! Dealer wins."
-    elif dealer_value[0] > 21:
-        return "Dealer busted! You win!"
-    elif user_value[1] == 21 and len(user_cards) == 2 and dealer_value[1] != 21:
+    user_score, user_has_ace = user_value
+    dealer_score, dealer_has_ace = dealer_value
+
+    if user_score > 21:
+        if user_has_ace:
+            user_score -= 10
+            user_has_ace = False
+        else:
+            return "You busted! Dealer wins."
+
+    if dealer_score > 21:
+        if dealer_has_ace:
+            dealer_score -= 10
+            dealer_has_ace = False
+        else:
+            return "Dealer busted! You win."
+
+    if user_score == 21 and len(user_cards) == 2 and dealer_score != 21:
         return "Blackjack! You win!"
-    elif dealer_value[1] == 21 and len(dealer_cards) == 2 and user_value[1] != 21:
+    elif dealer_score == 21 and len(dealer_cards) == 2 and user_score != 21:
         return "Dealer has Blackjack! Dealer wins!"
-    elif user_value[0] == 21 and len(user_cards) == 2 and dealer_value[0] == 21 and len(dealer_cards) == 2:
+    elif user_score == 21 and len(user_cards) == 2 and dealer_score == 21 and len(dealer_cards) == 2:
         return "You both hit a blackjack! It's a tie!"
-    elif user_value[0] == dealer_value[0]:
+    elif user_score == dealer_score:
         return "It's a tie!"
-    elif user_value[0] > dealer_value[0]:
+    elif user_score > dealer_score:
         return "You win!"
     else:
         return "Dealer wins."
