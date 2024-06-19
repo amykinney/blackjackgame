@@ -193,6 +193,24 @@ def hit_endpoint():
         return render_template('play.html', dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
 
 # Route to handle user standing
+# @app.route('/stand', methods=['POST'])
+# def stand():
+#     if 'username' not in session:
+#         return redirect(url_for('login'))
+#     dealer_value = dealer_turn()
+#     user_value = getDeckValue(user_cards)
+    
+#     result = determine_winner(user_value, dealer_value)
+    
+#     if "win" in result.lower():
+#         update_balance(session['realAmount'])
+#     else:
+#         update_balance(-session['realAmount'])
+        
+#     return render_template('result.html', result=result, dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
+
+
+# Route to handle user standing
 @app.route('/stand', methods=['POST'])
 def stand():
     if 'username' not in session:
@@ -202,12 +220,14 @@ def stand():
     
     result = determine_winner(user_value, dealer_value)
     
-    if "win" in result.lower():
+    if "you win" in result.lower():
         update_balance(session['realAmount'])
-    else:
+    elif "dealer wins" in result.lower():
         update_balance(-session['realAmount'])
-        
+    # No balance update on tie
+    
     return render_template('result.html', result=result, dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
+
 
 # Function to update user balance
 def update_balance(amount):
