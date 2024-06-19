@@ -66,6 +66,25 @@ def hit():
     user_cards.append(deck_obj.give_random_card())
     return getDeckValue(user_cards)
 
+# # Function to determine game result
+# def determine_winner(user_value, dealer_value):
+#     if user_value[0] > 21:
+#         return "You busted! Dealer wins."
+#     elif dealer_value[0] > 21:
+#         return "Dealer busted! You win!"
+#     elif user_value[1] == 21 and len(user_cards) == 2 and dealer_value[1] != 21:
+#         return "Blackjack! You win!"
+#     elif dealer_value[1] == 21 and len(dealer_cards) == 2 and user_value[1] != 21:
+#         return "Dealer has Blackjack! Dealer wins!"
+#     elif user_value[0] == 21 and len(user_cards) == 2 and dealer_value[0] == 21 and len(dealer_cards) == 2:
+#         return "You both hit a blackjack! It's a tie!"
+#     elif user_value[0] == dealer_value[0]:
+#         return "It's a tie!"
+#     elif user_value[0] > dealer_value[0]:
+#         return "You win!"
+#     else:
+#         return "Dealer wins!"
+
 # Function to determine game result
 def determine_winner(user_value, dealer_value):
     if user_value[0] > 21:
@@ -83,7 +102,7 @@ def determine_winner(user_value, dealer_value):
     elif user_value[0] > dealer_value[0]:
         return "You win!"
     else:
-        return "Dealer wins!"
+        return "Dealer wins."
 
 # Function for dealer's turn
 def dealer_turn():
@@ -210,6 +229,24 @@ def hit_endpoint():
 #     return render_template('result.html', result=result, dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
 
 
+# # Route to handle user standing
+# @app.route('/stand', methods=['POST'])
+# def stand():
+#     if 'username' not in session:
+#         return redirect(url_for('login'))
+#     dealer_value = dealer_turn()
+#     user_value = getDeckValue(user_cards)
+    
+#     result = determine_winner(user_value, dealer_value)
+    
+#     if "you win" in result.lower():
+#         update_balance(session['realAmount'])
+#     elif "dealer wins" in result.lower():
+#         update_balance(-session['realAmount'])
+#     # No balance update on tie
+    
+#     return render_template('result.html', result=result, dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
+
 # Route to handle user standing
 @app.route('/stand', methods=['POST'])
 def stand():
@@ -224,10 +261,9 @@ def stand():
         update_balance(session['realAmount'])
     elif "dealer wins" in result.lower():
         update_balance(-session['realAmount'])
-    # No balance update on tie
+    # No balance update on tie or dealer bust
     
     return render_template('result.html', result=result, dealer_cards=dealer_cards, user_cards=user_cards, dealer_value=dealer_value, user_value=user_value)
-
 
 # Function to update user balance
 def update_balance(amount):
