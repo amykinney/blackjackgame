@@ -1,0 +1,47 @@
+<!-- game.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackjack Game</title>
+</head>
+<body>
+    <h1>Blackjack Game in Progress</h1>
+    <!-- Add any game status display or updates here -->
+</body>
+</html> -->
+
+
+<!-- {% extends "base.html" %}
+
+{% block title %}Blackjack Game{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Blackjack Game</h1>
+    <div class="row">
+        <div class="col">
+            <h2>Dealer's Cards</h2>
+            <ul>
+                {% for card in dealer_cards %}
+                    <li>{{ card.name }}</li>
+                {% endfor %}
+            </ul>
+            <p>Dealer's Value: {{ dealer_value[0] }} / {{ dealer_value[1] }}</p>
+        </div>
+        <div class="col">
+            <h2>Your Cards</h2>
+            <ul>
+                {% for card in user_cards %}
+                    <li>{{ card.name }}</li>
+                {% endfor %}
+            </ul>
+            <p>Your Value: {{ user_value[0] }} / {{ user_value[1] }}</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('hit') }}" class="btn btn-primary">Hit</a>
+        <a href="{{ url_for('stand') }}" class="btn btn-secondary">Stand</a>
+    </div>
+{% endblock %} -->

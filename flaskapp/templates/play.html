@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Playing Blackjack{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS for making text white */
+    body {
+        color: white;
+    }
+    /* CSS to remove bullet points */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    /* CSS for card images */
+    .card-image {
+        width: 100px; /* Adjust the size as needed */
+        height: auto;
+        margin: 5px;
+    }
+    /* CSS for flex container */
+    .card-container {
+        display: flex;
+        flex-wrap: wrap; /* Allows wrapping to a new line if necessary */
+        justify-content: center; /* Centers the cards horizontally */
+    }
+</style>
+
+<div class="text-center">
+    <div class="blackjack-content">
+        <h2>Your Cards</h2>
+        <div class="card-container">
+            {% set card_image_map = {
+                'ace of spades': 'ace_of_spades.png',
+                '2 of spades': '2_of_spades.png',
+                '3 of spades': '3_of_spades.png',
+                '4 of spades': '4_of_spades.png',
+                '5 of spades': '5_of_spades.png',
+                '6 of spades': '6_of_spades.png',
+                '7 of spades': '7_of_spades.png',
+                '8 of spades': '8_of_spades.png',
+                '9 of spades': '9_of_spades.png',
+                '10 of spades': '10_of_spades.png',
+                'jack of spades': 'jack_of_spades.png',
+                'queen of spades': 'queen_of_spades.png',
+                'king of spades': 'king_of_spades.png',
+                'ace of hearts': 'ace_of_hearts.png',
+                '2 of hearts': '2_of_hearts.png',
+                '3 of hearts': '3_of_hearts.png',
+                '4 of hearts': '4_of_hearts.png',
+                '5 of hearts': '5_of_hearts.png',
+                '6 of hearts': '6_of_hearts.png',
+                '7 of hearts': '7_of_hearts.png',
+                '8 of hearts': '8_of_hearts.png',
+                '9 of hearts': '9_of_hearts.png',
+                '10 of hearts': '10_of_hearts.png',
+                'jack of hearts': 'jack_of_hearts.png',
+                'queen of hearts': 'queen_of_hearts.png',
+                'king of hearts': 'king_of_hearts.png',
+                'ace of diamonds': 'ace_of_diamonds.png',
+                '2 of diamonds': '2_of_diamonds.png',
+                '3 of diamonds': '3_of_diamonds.png',
+                '4 of diamonds': '4_of_diamonds.png',
+                '5 of diamonds': '5_of_diamonds.png',
+                '6 of diamonds': '6_of_diamonds.png',
+                '7 of diamonds': '7_of_diamonds.png',
+                '8 of diamonds': '8_of_diamonds.png',
+                '9 of diamonds': '9_of_diamonds.png',
+                '10 of diamonds': '10_of_diamonds.png',
+                'jack of diamonds': 'jack_of_diamonds.png',
+                'queen of diamonds': 'queen_of_diamonds.png',
+                'king of diamonds': 'king_of_diamonds.png',
+                'ace of clubs': 'ace_of_clubs.png',
+                '2 of clubs': '2_of_clubs.png',
+                '3 of clubs': '3_of_clubs.png',
+                '4 of clubs': '4_of_clubs.png',
+                '5 of clubs': '5_of_clubs.png',
+                '6 of clubs': '6_of_clubs.png',
+                '7 of clubs': '7_of_clubs.png',
+                '8 of clubs': '8_of_clubs.png',
+                '9 of clubs': '9_of_clubs.png',
+                '10 of clubs': '10_of_clubs.png',
+                'jack of clubs': 'jack_of_clubs.png',
+                'queen of clubs': 'queen_of_clubs.png',
+                'king of clubs': 'king_of_clubs.png',
+                'card_back': 'card_back2.png'
+            } %}
+            {% for card in user_cards %}
+                <div>
+                    {% set image_path = card_image_map[card.name.lower()] %}
+                    <img src="{{ url_for('static', filename='images/' ~ image_path) }}" alt="{{ card.name }}" class="card-image">
+                </div>
+            {% endfor %}
+        </div>
+        <p>Total Value: {{ user_value[0] }}</p>
+        
+        <h2>Dealer's Cards</h2>
+        <div class="card-container">
+            <div>
+                {% set image_path = card_image_map[dealer_cards[0].name.lower()] %}
+                <img src="{{ url_for('static', filename='images/' ~ image_path) }}" alt="{{ dealer_cards[0].name }}" class="card-image">
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='images/card_back2.png') }}" alt="Hidden" class="card-image">
+            </div>
+        </div>
+        <form action="{{ url_for('hit_endpoint') }}" method="POST">
+            <button type="submit" class="btn btn-primary">Hit</button>
+        </form>
+        <form action="{{ url_for('stand') }}" method="POST">
+            <button type="submit" class="btn btn-danger">Stand</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

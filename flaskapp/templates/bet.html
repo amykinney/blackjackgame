@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Place Your Bet{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS for making text white */
+    body {
+        color: white;
+    }
+    /* CSS for styling the chip image button */
+    .chip-button {
+        display: inline-block;
+        cursor: pointer;
+        margin: 10px;
+    }
+    .chip-image {
+        width: 100px; /* Adjust the size as needed */
+        height: auto;
+    }
+</style>
+
+<script>
+    // JavaScript function to handle chip button clicks
+    function addToBet(amount) {
+        var currentAmount = parseInt(document.getElementById('realAmount').innerText) || 0; // Default to 0 if NaN
+        var newAmount = currentAmount + amount;
+        document.getElementById('realAmount').innerText = newAmount;
+        
+        // Set the bet amount in the hidden input field
+        document.getElementById('betAmountInput').value = newAmount;
+    }
+    
+    // Function to submit the form and start the game
+    function startGame() {
+        var currentAmount = parseInt(document.getElementById('realAmount').innerText) || 0;
+        
+        if (currentAmount <= 0) {
+            alert('Please place a bet before starting the game.');
+            return;
+        }
+        
+        document.getElementById('betForm').submit();
+    }
+</script>
+
+<div class="text-center">
+    <h2>Place Your Bet</h2>
+    <p>Your Current Amount: <span id="realAmount">{{ realAmount }}</span></p>
+    <p>Total Balance: {{ total_balance }}</p>
+    
+    <!-- Chip buttons -->
+    <button type="button" class="chip-button" onclick="addToBet(20)">
+        <img src="{{ url_for('static', filename='images/chip3.png') }}" alt="Chip 3" class="chip-image">
+    </button>
+    <button type="button" class="chip-button" onclick="addToBet(50)">
+        <img src="{{ url_for('static', filename='images/chip1.png') }}" alt="Chip 1" class="chip-image">
+    </button>
+    <button type="button" class="chip-button" onclick="addToBet(100)">
+        <img src="{{ url_for('static', filename='images/chip2.png') }}" alt="Chip 2" class="chip-image">
+    </button>
+    
+    <!-- Form for betting -->
+    <form id="betForm" action="{{ url_for('place_bet') }}" method="POST">
+        <input type="hidden" id="betAmountInput" name="bet_amount" value="0">
+    </form>
+    
+    <!-- Button to start the game -->
+    <button type="button" class="btn btn-primary" onclick="startGame()">Start Game</button>
+    
+    <a href="/" class="btn btn-secondary">Back to Menu</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+</div>
+
+{% endblock %}

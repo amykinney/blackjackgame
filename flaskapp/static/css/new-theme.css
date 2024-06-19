@@ -1,0 +1,54 @@
+body {
+    background-color: #2f4f2f !important; /* Dark green */
+    color: #ffffff !important; /* White text */
+}
+
+/* Apply styles to all buttons */
+button, .btn {
+    background-color: #ffffff !important; /* White background */
+    color: #2f4f2f !important; /* Dark green text */
+    border-color: #2f4f2f !important; /* Dark green border */
+}
+
+/* Optional: Add hover and active states for better user experience */
+button:hover, .btn:hover, button:active, .btn:active {
+    background-color: #2f4f2f !important; /* Dark green background */
+    color: #ffffff !important; /* White text */
+}
+
+/* Style the header */
+header {
+    background-color: #ffffff !important; /* White background */
+    color: #2f4f2f !important; /* Dark green text */
+}
+
+/* Style the navbar brand */
+.navbar-brand {
+    color: #2f4f2f !important; /* Dark green text */
+}
+
+/* Style the navbar links */
+.navbar-dark .navbar-nav .nav-link {
+    color: #2f4f2f !important; /* Dark green text */
+}
+
+/* Optional: Add hover states for navbar links */
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #2f4f2f !important; /* Dark green text */
+    opacity: 0.8;
+}
+
+/* Style the specific header text to be white */
+.extravaganza-header {
+    color: #ffffff !important; /* White text */
+}
+
+/* Custom styles for the navbar */
+.navbar-custom {
+    background-color: white; /* White background */
+    color: darkgreen; /* Dark green text color */
+}
+
+.navbar-custom .navbar-brand {
+    color: inherit; /* Inherit text color */
+}

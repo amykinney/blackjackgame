@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<style>
+    /* CSS for making text white */
+    body {
+        color: white;
+    }
+</style>
+<div class="text-center">
+    <h2>Register</h2>
+    <form action="{{ url_for('register') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="submit" class="btn btn-primary mt-4">Register</button>
+    </form>
+    <a href="/" class="btn btn-secondary mt-4">Back to Menu</a>
+</div>
+{% endblock %}
