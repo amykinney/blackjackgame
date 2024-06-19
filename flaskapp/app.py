@@ -250,20 +250,39 @@ def start_game():
         return redirect(url_for('login'))
     return render_template('bet.html', realAmount=0, total_balance=session['balance'])
 
-# Route to handle bet submission
+# # Route to handle bet submission
+# @app.route('/place_bet', methods=['POST'])
+# def place_bet():
+#     if 'username' not in session:
+#         return redirect(url_for('login'))
+#     bet_amount = int(request.form['bet_amount'])
+    
+#     # Check if bet amount is more than the balance
+#     if bet_amount > session['balance']:
+#         return "You cannot bet more than your current balance!"
+    
+#     session['realAmount'] = bet_amount
+#     deal_initial_cards()
+#     return redirect(url_for('play_game'))
+
 @app.route('/place_bet', methods=['POST'])
 def place_bet():
     if 'username' not in session:
         return redirect(url_for('login'))
+    
     bet_amount = int(request.form['bet_amount'])
     
     # Check if bet amount is more than the balance
     if bet_amount > session['balance']:
         return "You cannot bet more than your current balance!"
     
+    # Update realAmount and total_balance in session
     session['realAmount'] = bet_amount
+    session['total_balance'] = session['balance']
+    
     deal_initial_cards()
     return redirect(url_for('play_game'))
+
 
 # Route to play the game
 @app.route('/play_game')

@@ -31,6 +31,13 @@
         document.getElementById('betAmountInput').value = newAmount;
     }
     
+    // Function to bet all chips
+    function betAll() {
+        var totalBalance = parseInt("{{ total_balance }}");
+        document.getElementById('realAmount').innerText = totalBalance;
+        document.getElementById('betAmountInput').value = totalBalance;
+    }
+    
     // Function to submit the form and start the game
     function startGame() {
         var currentAmount = parseInt(document.getElementById('realAmount').innerText) || 0;
@@ -58,6 +65,11 @@
     </button>
     <button type="button" class="chip-button" onclick="addToBet(100)">
         <img src="{{ url_for('static', filename='images/chip2.png') }}" alt="Chip 2" class="chip-image">
+    </button>
+    
+    <!-- All In button -->
+    <button type="button" class="chip-button" onclick="betAll()">
+        <img src="{{ url_for('static', filename='images/all_in.png') }}" alt="All In" class="chip-image">
     </button>
     
     <!-- Form for betting -->
