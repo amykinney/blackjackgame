@@ -281,7 +281,14 @@ def play_again():
         return redirect(url_for('login'))
     return redirect(url_for('start_game'))
 
-
+@app.route('/leaderboard')
+def leaderboard():
+    conn = sqlite3.connect('blackjack.db')
+    c = conn.cursor()
+    c.execute('SELECT username, total_balance FROM players ORDER BY total_balance DESC LIMIT 10')
+    top_scorers = c.fetchall()
+    conn.close()
+    return render_template('leaderboard.html', top_scorers=top_scorers)
 
 if __name__ == '__main__':
     app.run(debug=True)
